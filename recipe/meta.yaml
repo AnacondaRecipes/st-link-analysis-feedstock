@@ -15,9 +15,6 @@ build:
   skip: True  # [py<38]
 
 requirements:
-  build:
-    - patch  # [not win]
-    - m2-patch  # [win]
   host:
     - python
     - hatchling
