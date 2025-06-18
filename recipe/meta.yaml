@@ -29,6 +29,7 @@ test:
     - tests
   imports:
     - st_link_analysis
+    - st_link_analysis.component
   commands:
     - pip check
     - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
