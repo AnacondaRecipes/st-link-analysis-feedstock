@@ -23,7 +23,7 @@ requirements:
     - python
     - streamlit >=0.63
 
-# Unable to run upstream tests: pytest-playwirhgt is not avaliable in main and snowflake.
+# Unable to run upstream tests: pytest-playwright is not available in main and snowflake.
 test:
   files:
     - tests
