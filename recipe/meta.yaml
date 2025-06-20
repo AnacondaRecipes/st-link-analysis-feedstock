@@ -1,0 +1,55 @@
+{% set name = "st-link-analysis" %}
+{% set version = "0.3.0" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://github.com/AlrasheedA/{{ name }}/archive/refs/tags/v{{ version }}.tar.gz
+  sha256: b1b95fe63d9927d61d52deb524be628cc7fd41869014a37f2d1aa02a92460181
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  skip: True  # [py<38]
+
+requirements:
+  host:
+    - python
+    - hatchling
+    - pip
+  run:
+    - python
+    - streamlit >=0.63
+
+# Unable to run upstream tests: pytest-playwright is not available in main and snowflake.
+test:
+  files:
+    - tests
+  imports:
+    - st_link_analysis
+    - st_link_analysis.component
+  commands:
+    - pip check
+    - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
+    # llm testing
+    - pytest -v tests/llm_test_suite.py
+  requires:
+    - pip
+    - pytest >=7.0.0
+    - mock >=4.0.0
+
+about:
+  home: https://github.com/AlrasheedA/st-link-analysis
+  summary: A streamlit custom component for visualizing and interacting with graphs
+  license: MIT
+  license_family: MIT
+  license_file: LICENSE
+  description: A custom Streamlit component for link analysis, built with Cytoscape.js and Streamlit.
+  dev_url: https://github.com/AlrasheedA/st-link-analysis
+  doc_url: https://github.com/AlrasheedA/st-link-analysis/blob/main/README.md
+
+extra:
+  recipe-maintainers:
+    - snegireff
